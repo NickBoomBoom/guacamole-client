@@ -1,0 +1,35 @@
+{
+  "name": "guacamole-common-js",
+  "version": "1.6.0",
+  "description": "",
+  "type": "module",
+  "main": "dist/cjs/guacamole-common.js",
+  "module": "dist/esm/guacamole-common.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/guacamole-common.js",
+      "require": "./dist/cjs/guacamole-common.js"
+    }
+  },
+  "scripts": {
+    "prebuild": "mkdir -p dist/esm dist/cjs",
+    "build": "pnpm run prebuild && pnpm run build:esm && pnpm run build:cjs",
+    "build:esm:concat": "cat guacamole-common-js/src/main/webapp/modules/*.js > dist/esm/guacamole-common.js && node ./build.cjs",
+    "build:esm:append": "echo 'export default Guacamole;' >> dist/esm/guacamole-common.js",
+    "build:esm:minify": "npx terser dist/esm/guacamole-common.js > dist/esm/guacamole-common.min.js",
+    "build:esm": "pnpm run build:esm:concat && pnpm run build:esm:append && pnpm run build:esm:minify",
+    "build:cjs:concat": "cat guacamole-common-js/src/main/webapp/modules/*.js > dist/cjs/guacamole-common.js  && node ./build.cjs",
+    "build:cjs:append": "echo 'module.exports = Guacamole;' >> dist/cjs/guacamole-common.js",
+    "build:cjs:minify": "npx terser dist/cjs/guacamole-common.js > dist/cjs/guacamole-common.min.js",
+    "build:cjs": "pnpm run build:cjs:concat && pnpm run build:cjs:append && pnpm run build:cjs:minify",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.6.5",
+  "devDependencies": {
+    "minify": "^14.0.0",
+    "terser": "^5.43.1"
+  }
+}
