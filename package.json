@@ -27,7 +27,7 @@
     "build:cjs:minify": "npx terser dist/cjs/guacamole-common.js > dist/cjs/guacamole-common.min.js",
     "build:cjs": "pnpm run build:cjs:concat && pnpm run build:cjs:append && pnpm run build:cjs:minify",
     "prepublishOnly": "pnpm run build",
-    "publish": "pnpm run build && pnpm run push"
+    "push": "pnpm run build && pnpm run publish"
   },
   "keywords": [],
   "author": "",
